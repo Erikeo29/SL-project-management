@@ -1,0 +1,13 @@
+project;start_date;end_date;progress;responsible;budget
+Projet Alpha - Phase 1;2025-10-01;2026-03-31;70;Moreau;30000
+Projet Alpha - Phase 2;2026-01-15;2026-07-31;15;Moreau;45000
+Projet Beta - Prototypage;2025-12-01;2026-04-30;50;Petit;25000
+Projet Beta - Validation;2026-03-01;2026-09-30;0;Petit;35000
+Projet Gamma - Etude marche;2026-01-01;2026-03-31;80;Roux;12000
+Projet Gamma - Lancement;2026-04-01;2026-10-31;0;Roux;80000
+Projet Delta - Compliance;2025-09-01;2026-02-28;90;Simon;18000
+Projet Delta - Audit externe;2026-03-15;2026-05-15;0;Simon;10000
+Amelioration continue - Ligne 1;2025-11-01;2026-12-31;35;Moreau;60000
+Amelioration continue - Ligne 2;2026-01-01;2026-12-31;10;Petit;55000
+Veille technologique IA;2026-01-01;2026-06-30;40;Roux;8000
+Formation equipe Lean Six Sigma;2026-02-01;2026-04-30;20;Simon;15000

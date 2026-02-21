@@ -1,0 +1,19 @@
+project;start_date;end_date;progress;responsible;budget
+Validation procede electrodepot Ni;2025-09-01;2026-04-30;65;Dupont;45000
+Qualification fournisseur anodes Cu;2025-11-15;2026-03-15;40;Martin;18000
+Mise a jour SOP salle blanche;2026-01-10;2026-02-28;90;Leroy;5000
+Audit interne ISO 13485;2026-02-01;2026-05-31;15;Bernard;12000
+Migration logiciel SPC vers v4.0;2025-10-01;2026-06-30;30;Dupont;60000
+Tests biocompatibilite lot 2026-A;2026-01-15;2026-04-15;25;Garcia;35000
+Formation operateurs nouvelle ligne;2026-02-10;2026-03-20;50;Leroy;8000
+Qualification equipement mesure ICP;2025-12-01;2026-03-31;55;Martin;22000
+Etude stabilite acceleree capteur;2025-08-01;2026-02-15;95;Garcia;28000
+Revue design V2 capteur glucose;2026-01-20;2026-07-31;10;Bernard;50000
+Optimisation parametres bain Cu acide;2025-11-01;2026-04-30;45;Dupont;30000
+Validation nettoyage equipements;2026-02-01;2026-04-30;5;Leroy;10000
+Rapport annuel performance qualite;2026-01-01;2026-03-31;60;Bernard;3000
+Benchmark fournisseurs electrolytes;2026-01-15;2026-05-15;20;Garcia;15000
+Plan maintenance preventive 2026;2025-12-15;2026-02-28;85;Martin;7000
+Developpement protocole EIS inline;2026-02-01;2026-08-31;5;Dupont;40000
+Certification CE nouveau dispositif;2025-07-01;2026-03-31;80;Bernard;55000
+Etude faisabilite depot Au pulse;2026-01-01;2026-06-30;12;Garcia;25000
