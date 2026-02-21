@@ -1,0 +1,16 @@
+cookie:
+  expiry_days: 30
+  key: proj_mgmt_secret_key_change_me
+  name: proj_mgmt_auth
+
+credentials:
+  usernames:
+    LXS:
+      email: lxs@example.com
+      failed_login_attempts: 0
+      first_name: LXS
+      last_name: User
+      logged_in: false
+      password: HC
+      roles:
+        - admin
