@@ -11,6 +11,6 @@ credentials:
       first_name: LXS
       last_name: User
       logged_in: false
-      password: $2b$12$9mTfT/t0du/d.yBH1gJE.e2QNohNk.TRaaBUW16.B39B2GUmxjJA2
+      password: $2b$12$qnXXggJi.Ie7886qQJhk/e9gVIUe7XMrPewlWwskQamA93YL0veFm
       roles:
         - admin
