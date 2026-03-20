@@ -126,6 +126,7 @@ TRANSLATIONS = {
         "chat_close": "Fermer",
         "chat_clear": "Effacer",
         "chat_api_missing": "Cle API manquante. Configurez GROQ_API_KEY.",
+        "chat_disclaimer": "⚠️ Reponse generee par IA — peut contenir des erreurs ou omissions. Verifiez toujours les informations avec vos donnees projet.",
         "chat_toggle": "Assistant IA",
         # Version
         "version_info": f"""**Version {VERSION}** -- {VERSION_DATE}
@@ -206,6 +207,7 @@ TRANSLATIONS = {
         "chat_close": "Close",
         "chat_clear": "Clear",
         "chat_api_missing": "API key missing. Configure GROQ_API_KEY.",
+        "chat_disclaimer": "⚠️ AI-generated response — may contain errors or omissions. Always verify information against your project data.",
         "chat_toggle": "AI Assistant",
         # Version
         "version_info": f"""**Version {VERSION}** -- {VERSION_DATE}
@@ -484,6 +486,10 @@ with st.popover(t("chat_toggle"), use_container_width=False):
         for msg in st.session_state.chat_messages[-20:]:
             with st.chat_message(msg["role"]):
                 st.markdown(msg["content"])
+
+        # Disclaimer après les réponses
+        if st.session_state.chat_messages:
+            st.caption(t("chat_disclaimer"))
 
         if not st.session_state.chat_messages:
             st.info(t("chat_welcome"))
@@ -813,6 +819,7 @@ Mentionne les projets a risque en priorite avec des actions concretes."""
     # Affichage rapport
     if st.session_state.report_text:
         st.markdown("---")
+        st.caption(t("chat_disclaimer"))
         st.markdown(st.session_state.report_text)
         st.download_button(
             "Download report (.md)",
