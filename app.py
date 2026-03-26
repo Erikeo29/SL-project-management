@@ -126,7 +126,7 @@ TRANSLATIONS = {
         "chat_close": "Fermer",
         "chat_clear": "Effacer",
         "chat_api_missing": "Cle API manquante. Configurez GROQ_API_KEY.",
-        "chat_disclaimer": "⚠️ Reponse generee par IA — peut contenir des erreurs ou omissions. Verifiez toujours les informations avec vos donnees projet.",
+        "chat_disclaimer": "⚠️ Reponse generee par IA - peut contenir des erreurs ou omissions. Verifiez toujours les informations avec vos donnees projet.",
         "chat_toggle": "Assistant IA",
         # Version
         "version_info": f"""**Version {VERSION}** -- {VERSION_DATE}
@@ -207,7 +207,7 @@ TRANSLATIONS = {
         "chat_close": "Close",
         "chat_clear": "Clear",
         "chat_api_missing": "API key missing. Configure GROQ_API_KEY.",
-        "chat_disclaimer": "⚠️ AI-generated response — may contain errors or omissions. Always verify information against your project data.",
+        "chat_disclaimer": "⚠️ AI-generated response - may contain errors or omissions. Always verify information against your project data.",
         "chat_toggle": "AI Assistant",
         # Version
         "version_info": f"""**Version {VERSION}** -- {VERSION_DATE}
