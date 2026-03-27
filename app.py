@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import base64
 import os
 import pandas as pd
@@ -874,6 +875,15 @@ MIT License
 
 # ═══════════════════════════ ROUTING ═══════════════════════════
 
+
+# --- Auto-scroll to top on page change ---
+_page_id = f"{st.session_state.nav_gen_idx}_{st.session_state.nav_study_idx}_{st.session_state.nav_annex_idx}"
+if st.session_state.get("_last_page") != _page_id:
+    st.session_state["_last_page"] = _page_id
+    components.html(
+        '<script>window.parent.document.querySelector("section.main").scrollTo(0, 0);</script>',
+        height=0,
+    )
 if st.session_state.nav_gen_idx == 0:
     page_home()
 elif st.session_state.nav_gen_idx == 1:
