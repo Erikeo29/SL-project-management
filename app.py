@@ -62,7 +62,8 @@ VERSION_DATE = "Feb 2026"
 # --- Dictionnaire de Traduction UI ---
 TRANSLATIONS = {
     "fr": {
-        "title": "Gestion de projet augmentee",
+        "title": "Gestion de projet augmentée",
+        "hero_subtitle": "Gantt interactif, analyse de risques et rapports IA pour le pilotage de projet",
         "sidebar_title": "Gestion de projet",
         "nav_header": "Navigation",
         "gen_header": "General",
@@ -144,6 +145,7 @@ TRANSLATIONS = {
     },
     "en": {
         "title": "Augmented project management",
+        "hero_subtitle": "Interactive Gantt, risk analysis and AI reports for project steering",
         "sidebar_title": "Project Management",
         "nav_header": "Navigation",
         "gen_header": "General",
@@ -423,7 +425,12 @@ def page_home():
     """Page d'accueil."""
     lang = st.session_state.lang
     doc_path = os.path.join(DOC_PATH, lang, "accueil.md")
-    st.title(t("title"))
+    st.markdown(f"""
+    <div class="hero-banner">
+        <h1>{t("title")}</h1>
+        <p>{t("hero_subtitle")}</p>
+    </div>
+    """, unsafe_allow_html=True)
     try:
         content = load_file_content(doc_path)
         st.markdown(content)
