@@ -19,24 +19,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# --- Auto-scroll to top on page change ---
-import streamlit.components.v1 as _components
-_pid = f"{st.session_state.get('nav_gen_idx')}_{st.session_state.get('nav_study_idx')}_{st.session_state.get('nav_annex_idx')}"
-if st.session_state.get("_last_page") != _pid:
-    st.session_state["_last_page"] = _pid
-    _components.html(
-        '<script>'
-        'function scrollTop(){'
-        'var e=window.parent.document;'
-        'var targets=["section.main","[data-testid=stAppViewContainer]",".main"];'
-        'targets.forEach(function(s){var el=e.querySelector(s);if(el)el.scrollTo(0,0);});'
-        'e.scrollingElement.scrollTo(0,0);'
-        '}'
-        'scrollTop();setTimeout(scrollTop,100);setTimeout(scrollTop,300);'
-        '</script>',
-        height=0,
-    )
-
 # --- Authentication ---
 _cfg_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.yaml")
 with open(_cfg_path) as _f:
@@ -351,12 +333,6 @@ except FileNotFoundError:
 
 if "lang" not in st.session_state:
     st.session_state.lang = "fr"
-if "nav_gen_idx" not in st.session_state:
-    st.session_state.nav_gen_idx = 0
-if "nav_study_idx" not in st.session_state:
-    st.session_state.nav_study_idx = None
-if "nav_annex_idx" not in st.session_state:
-    st.session_state.nav_annex_idx = None
 if "chat_messages" not in st.session_state:
     st.session_state.chat_messages = []
 if "project_data" not in st.session_state:
@@ -364,124 +340,6 @@ if "project_data" not in st.session_state:
 if "report_text" not in st.session_state:
     st.session_state.report_text = ""
 
-
-# ─────────────────────────── Navigation callbacks ───────────────────────────
-
-
-def set_nav(section: str, idx: int):
-    """Met a jour la navigation."""
-    if section == "gen":
-        st.session_state.nav_gen_idx = idx
-        st.session_state.nav_study_idx = None
-        st.session_state.nav_annex_idx = None
-    elif section == "study":
-        st.session_state.nav_gen_idx = None
-        st.session_state.nav_study_idx = idx
-        st.session_state.nav_annex_idx = None
-    elif section == "annex":
-        st.session_state.nav_gen_idx = None
-        st.session_state.nav_study_idx = None
-        st.session_state.nav_annex_idx = idx
-
-
-# ─────────────────────────── Sidebar ───────────────────────────
-
-with st.sidebar:
-    st.title(t("sidebar_title"))
-    st.markdown("---")
-
-    # Langue
-    lang_cols = st.columns(2)
-    with lang_cols[0]:
-        if st.button("Francais", use_container_width=True,
-                      type="primary" if st.session_state.lang == "fr" else "secondary"):
-            if st.session_state.lang != "fr":
-                st.session_state.lang = "fr"
-                st.rerun()
-    with lang_cols[1]:
-        if st.button("English", use_container_width=True,
-                      type="primary" if st.session_state.lang == "en" else "secondary"):
-            if st.session_state.lang != "en":
-                st.session_state.lang = "en"
-                st.rerun()
-
-    st.markdown("---")
-
-    # Navigation - General
-    st.subheader(t("gen_header"))
-    gen_pages = t("gen_pages")
-    for i, page in enumerate(gen_pages):
-        is_active = st.session_state.nav_gen_idx == i
-        if st.button(
-            f"{'▸ ' if is_active else ''}{page}",
-            key=f"gen_{i}",
-            use_container_width=True,
-            type="primary" if is_active else "secondary",
-        ):
-            set_nav("gen", i)
-            st.rerun()
-
-    st.markdown("---")
-
-    # Navigation - Etudes
-    st.subheader(t("study_header"))
-    study_pages = t("study_pages")
-    for i, page in enumerate(study_pages):
-        is_active = st.session_state.nav_study_idx == i
-        if st.button(
-            f"{'▸ ' if is_active else ''}{page}",
-            key=f"study_{i}",
-            use_container_width=True,
-            type="primary" if is_active else "secondary",
-        ):
-            set_nav("study", i)
-            st.rerun()
-
-    st.markdown("---")
-
-    # Navigation - Annexes
-    st.subheader(t("annex_header"))
-    annex_pages = t("annex_pages")
-    for i, page in enumerate(annex_pages):
-        is_active = st.session_state.nav_annex_idx == i
-        if st.button(
-            f"{'▸ ' if is_active else ''}{page}",
-            key=f"annex_{i}",
-            use_container_width=True,
-            type="primary" if is_active else "secondary",
-        ):
-            set_nav("annex", i)
-            st.rerun()
-
-    st.markdown("---")
-
-    # Upload rapide
-    uploaded = st.file_uploader(
-        t("upload_title"),
-        type=["csv", "xlsx"],
-        help=t("upload_columns"),
-    )
-    if uploaded is not None:
-        try:
-            if uploaded.name.endswith(".csv"):
-                df_up = pd.read_csv(uploaded, sep=";")
-            else:
-                df_up = pd.read_excel(uploaded)
-            st.session_state.project_data = df_up
-            st.success(t("upload_success"))
-        except Exception as e:
-            st.error(f"{t('data_not_found')}: {str(e)[:80]}")
-
-    if st.session_state.project_data is None:
-        if st.button(t("upload_use_sample"), use_container_width=True):
-            sample = load_sample_data()
-            if not sample.empty:
-                st.session_state.project_data = sample
-                st.rerun()
-
-    st.markdown("---")
-    st.markdown(t("version_info"))
-    st.caption("MIT License")
 
 # ─────────────────────────── Chatbot (popover) ───────────────────────────
 
@@ -891,20 +749,116 @@ MIT License
 """)
 
 
+# ─────────────────────────── st.navigation ───────────────────────────
+
+gen_pages = t("gen_pages")
+study_pages = t("study_pages")
+annex_pages = t("annex_pages")
+
+_GEN_PAGES = [
+    st.Page(func, title=title, url_path=url, default=(url == "home"))
+    for func, title, url in zip(
+        [page_home, page_dashboard],
+        gen_pages,
+        ["home", "dashboard"],
+    )
+]
+_STUDY_PAGES = [
+    st.Page(func, title=title, url_path=url)
+    for func, title, url in zip(
+        [page_resources, page_reports],
+        study_pages,
+        ["resources", "reports"],
+    )
+]
+_ANNEX_PAGES = [
+    st.Page(func, title=title, url_path=url)
+    for func, title, url in zip(
+        [page_methodology, page_about],
+        annex_pages,
+        ["methodology", "about"],
+    )
+]
+
+nav = st.navigation(
+    {
+        t("gen_header"): _GEN_PAGES,
+        t("study_header"): _STUDY_PAGES,
+        t("annex_header"): _ANNEX_PAGES,
+    },
+    position="hidden",
+)
+
+# ─────────────────────────── Sidebar (custom page_link) ───────────────────────────
+
+with st.sidebar:
+    st.title(t("sidebar_title"))
+    st.markdown("---")
+
+    # Langue
+    lang_cols = st.columns(2)
+    with lang_cols[0]:
+        if st.button("Francais", use_container_width=True,
+                      type="primary" if st.session_state.lang == "fr" else "secondary"):
+            if st.session_state.lang != "fr":
+                st.session_state.lang = "fr"
+                st.rerun()
+    with lang_cols[1]:
+        if st.button("English", use_container_width=True,
+                      type="primary" if st.session_state.lang == "en" else "secondary"):
+            if st.session_state.lang != "en":
+                st.session_state.lang = "en"
+                st.rerun()
+
+    st.markdown("---")
+
+    # Navigation custom avec st.page_link
+    _GROUPS = [
+        (t("gen_header"), _GEN_PAGES),
+        (t("study_header"), _STUDY_PAGES),
+        (t("annex_header"), _ANNEX_PAGES),
+    ]
+
+    for header, pages in _GROUPS:
+        st.subheader(header)
+        for page in pages:
+            is_active = page is nav
+            st.page_link(
+                page,
+                label=f"**{page.title}**" if is_active else page.title,
+                icon=":material/arrow_right:" if is_active else None,
+                use_container_width=True,
+            )
+        st.markdown("---")
+
+    # Upload rapide
+    uploaded = st.file_uploader(
+        t("upload_title"),
+        type=["csv", "xlsx"],
+        help=t("upload_columns"),
+    )
+    if uploaded is not None:
+        try:
+            if uploaded.name.endswith(".csv"):
+                df_up = pd.read_csv(uploaded, sep=";")
+            else:
+                df_up = pd.read_excel(uploaded)
+            st.session_state.project_data = df_up
+            st.success(t("upload_success"))
+        except Exception as e:
+            st.error(f"{t('data_not_found')}: {str(e)[:80]}")
+
+    if st.session_state.project_data is None:
+        if st.button(t("upload_use_sample"), use_container_width=True):
+            sample = load_sample_data()
+            if not sample.empty:
+                st.session_state.project_data = sample
+                st.rerun()
+
+    st.markdown("---")
+    st.markdown(t("version_info"))
+    st.caption("MIT License")
+
 # ═══════════════════════════ ROUTING ═══════════════════════════
 
-
-if st.session_state.nav_gen_idx == 0:
-    page_home()
-elif st.session_state.nav_gen_idx == 1:
-    page_dashboard()
-elif st.session_state.nav_study_idx == 0:
-    page_resources()
-elif st.session_state.nav_study_idx == 1:
-    page_reports()
-elif st.session_state.nav_annex_idx == 0:
-    page_methodology()
-elif st.session_state.nav_annex_idx == 1:
-    page_about()
-else:
-    page_home()
+nav.run()

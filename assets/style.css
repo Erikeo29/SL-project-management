@@ -47,6 +47,26 @@ button[kind="primary"]:hover {
     border-left: 4px solid #004b87;
 }
 
+/* Page links dans la sidebar (st.navigation) */
+.stPageLink {
+    margin-top: -0.3rem !important;
+    margin-bottom: -0.3rem !important;
+}
+.stPageLink a {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    border-left: 3px solid transparent !important;
+}
+.stPageLink a:hover {
+    background-color: rgba(0, 75, 135, 0.20) !important;
+    border-left-color: #004b87 !important;
+}
+.stPageLink:has(strong) a,
+.stPageLink:has(b) a {
+    background-color: rgba(0, 75, 135, 0.20) !important;
+    border-left-color: #004b87 !important;
+}
+
 /* --- Masquer favicons des liens externes --- */
 a[href^="http"]::before,
 a[href^="https"]::before {
