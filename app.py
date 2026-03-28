@@ -19,6 +19,24 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# --- Auto-scroll to top on page change ---
+import streamlit.components.v1 as _components
+_pid = f"{st.session_state.get('nav_gen_idx')}_{st.session_state.get('nav_study_idx')}_{st.session_state.get('nav_annex_idx')}"
+if st.session_state.get("_last_page") != _pid:
+    st.session_state["_last_page"] = _pid
+    _components.html(
+        '<script>'
+        'function scrollTop(){'
+        'var e=window.parent.document;'
+        'var targets=["section.main","[data-testid=stAppViewContainer]",".main"];'
+        'targets.forEach(function(s){var el=e.querySelector(s);if(el)el.scrollTo(0,0);});'
+        'e.scrollingElement.scrollTo(0,0);'
+        '}'
+        'scrollTop();setTimeout(scrollTop,100);setTimeout(scrollTop,300);'
+        '</script>',
+        height=0,
+    )
+
 # --- Authentication ---
 _cfg_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.yaml")
 with open(_cfg_path) as _f:
@@ -876,24 +894,6 @@ MIT License
 # ═══════════════════════════ ROUTING ═══════════════════════════
 
 
-# --- Auto-scroll to top on page change ---
-_page_id = f"{st.session_state.nav_gen_idx}_{st.session_state.nav_study_idx}_{st.session_state.nav_annex_idx}"
-if st.session_state.get("_last_page") != _page_id:
-    st.session_state["_last_page"] = _page_id
-    components.html(
-        (
-            '<script>'
-            'function scrollTop(){'
-            'var e=window.parent.document;'
-            'var targets=["section.main","[data-testid=stAppViewContainer]",".main"];'
-            'targets.forEach(function(s){var el=e.querySelector(s);if(el)el.scrollTo(0,0);});'
-            'e.scrollingElement.scrollTo(0,0);'
-            '}'
-            'scrollTop();setTimeout(scrollTop,100);setTimeout(scrollTop,300);'
-            '</script>'
-        ),
-        height=0,
-    )
 if st.session_state.nav_gen_idx == 0:
     page_home()
 elif st.session_state.nav_gen_idx == 1:
